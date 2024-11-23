@@ -4,24 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
     <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
     <link rel="stylesheet" href="src/style.css" />
-    <title>AI Music Paylist Generator</title>
+    <title>AI Song Generator</title>
 </head>
 
 <body>
     <header>
-        <h1>🎵 AI Playlist Generator</h1>
-        <p>Transform your mood into music</p>
+        <h1>🎵 AI Song Generator</h1>
+        <p>Transform your mood into a song</p>
     </header>
-
 
     <div class="container">
         <div class="input-section">
             <div class="input-group">
-                <input type="text" id="moodInput" placeholder="Enter your mood (e.g., happy, chill, energetic)" required
-                    autofocus autocomplete="off">
-                <select id="genreSelect">
+                <input type="text" id="moodInput" placeholder="Enter your mood (e.g., happy, chill)" autofocus
+                    autocomplete="off">
+            </div>
+            <div class="input-group">
+                <select id="genreselect">
                     <option value="">Select Genre (Optional)</option>
                     <option value="pop">Pop</option>
                     <option value="rock">Rock</option>
@@ -33,19 +35,20 @@
             </div>
             <div class="input-group">
                 <input type="text" id="artistInput" placeholder="Inspired by artist (Optional)" autocomplete="off">
-                <button onclick="generatePlaylist()">Generate Playlist</button>
+            </div>
+            <div class="input-group">
+                <button>Generate Song</button>
             </div>
         </div>
 
-        <div class="loading" id="loading">
+        <div class="loading" id="loading" style="display: none;">
             <div class="pulse"></div>
-            <p>Crafting your perfect playlist with AI magic... ✨</p>
+            <p>Crafting your perfect song...</p>
         </div>
 
-        <div class="playlist-container" id="playlistContainer">
-
-        </div>
+        <div class="song-class" id="songResult" style="display: none;"></div>
     </div>
+
 
 
 

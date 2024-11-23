@@ -1,41 +1,52 @@
-function generatePlaylist(event) {
+function generateSong(event) {
   event.preventDefault();
 
-  let mood = document.querySelector("#moodInput").value;
-  let genre = document.querySelector("#genreSelect").value;
-  let artist = document.querySelector("#artistInput").value;
+  let mood = document.getElementById("moodInput").value;
+  let genre = document.getElementById("genreselect").value;
+  let artist = document.getElementById("artistInput").value;
 
-  let loadingElement = document.querySelector("#loading");
-  let playlistContainer = document.querySelector("#playlistContainer");
-  loadingElement.style.display = "block";
-  playlistContainer.innerHTML = "";
+  let apiKey = "23a0fd23dfocba49tebfd4efa06352b1";
 
-  setTimeout(() => {
-    loadingElement.style.display = "none";
+  let prompt = `What is a real, existing ${mood} song by ${artist}? Please provide just the song title and release year. For example: if looking for a happy Chris Brown song, you might suggest "Forever (2008)" or "Yeah 3x (2010)". Only suggest real songs that actually exist.`;
 
-    let playlistMessage = `Creating a playlist inspired by ${
-      mood || "your mood"
-    }, ${genre || "any genre"}, and ${artist || "various artists"}...`;
+  let context = `You are a music expert with deep knowledge of popular music. Only recommend real, existing songs by the specified artist that match the requested mood.`;
 
-    new Typewriter(playlistContainer, {
-      strings: playlistMessage,
-      autoStart: true,
-      delay: 50,
-      onComplete: () => {
-        let playlist = [
-          `1. Song inspired by ${mood || "your mood"}`,
-          `2. Song inspired by ${genre || "any genre"}`,
-          `3. Song inspired by ${artist || "various artists"}`,
-        ];
-        playlist.forEach((song) => {
-          let songElement = document.createElement("p");
-          songElement.textContent = song;
-          playlistContainer.appendChild(songElement);
-        });
-      },
+  let apiUrl = `https://api.shecodes.io/ai/v1/generate?prompt=${encodeURIComponent(
+    prompt
+  )}&context=${encodeURIComponent(context)}&key=${apiKey}`;
+
+  document.getElementById("loading").style.display = "block";
+  document.getElementById("songResult").style.display = "none";
+
+  axios
+    .get(apiUrl)
+    .then((response) => {
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("songResult").style.display = "block";
+
+      let song = response.data.answer || "No song found.";
+
+      document.getElementById("songResult").innerHTML = `
+        <div class="song-card">
+          <h2>Recommended Song</h2>
+          <div class="song-info">
+            <p class="song-title">${song}</p>
+            <p class="song-artist">by ${artist}</p>
+            <p class="song-mood">Mood: ${mood}</p>
+            <p class="song-genre">Genre: ${genre}</p>
+            <p class="streaming-note">🎵 Available on Spotify, Apple Music, and other streaming platforms</p>
+          </div>
+        </div>
+      `;
+    })
+    .catch((error) => {
+      console.error("Error finding song:", error);
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("songResult").style.display = "block";
+      document.getElementById("songResult").innerHTML =
+        "<p class='error'>Sorry, something went wrong. Please try again.</p>";
     });
-  }, 2000);
 }
 
-let playlistFormElement = document.querySelector(".input-section");
-playlistFormElement.addEventListener("submit", generatePlaylist);
+let generateButton = document.querySelector("button");
+generateButton.addEventListener("click", generateSong);
