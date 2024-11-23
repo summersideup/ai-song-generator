@@ -10,20 +10,41 @@
 
 <body>
     <header>
-        <h1>AI Music playlist generator</h1>
+        <h1>🎵 AI Playlist Generator</h1>
+        <p>Transform your mood into music</p>
     </header>
 
-    <main>
-        <form>
-            <input type="text" placeholder="Enter a music genre, mood, or artist" autofocus required
-                autocomplete="off" />
-            <input type="submit" value="Generate Playlist" />
-        </form>
-        <div>
-            <p>Your AI-generated playlist will appear here...</p>
-        </div>
-    </main>
 
+    <div class="container">
+        <div class="input-section">
+            <div class="input-group">
+                <input type="text" id="moodInput" placeholder="Enter your mood (e.g., happy, chill, energetic)" required
+                    autofocus autocomplete="off">
+                <select id="genreSelect">
+                    <option value="">Select Genre (Optional)</option>
+                    <option value="pop">Pop</option>
+                    <option value="rock">Rock</option>
+                    <option value="hip-hop">Hip-Hop</option>
+                    <option value="electronic">Electronic</option>
+                    <option value="jazz">Jazz</option>
+                    <option value="classical">Classical</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <input type="text" id="artistInput" placeholder="Inspired by artist (Optional)" autocomplete="off">
+                <button onclick="generatePlaylist()">Generate Playlist</button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="pulse"></div>
+            <p>Crafting your perfect playlist with AI magic... ✨</p>
+        </div>
+
+        <div class="playlist-container" id="playlistContainer">
+
+        </div>
+    </div>
 
 
 
